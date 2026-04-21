@@ -98,4 +98,7 @@ public class Patient {
                 ", nb_rendez_vous=" + (rendezVouses != null ? rendezVouses.size() : 0) +
                 '}';
     }
+    public Patient CreerPatient(String nom, String prenom, String courriel, String mot_de_passe) {
+        return new Patient(nom, prenom, courriel, mot_de_passe);
+    }
 }

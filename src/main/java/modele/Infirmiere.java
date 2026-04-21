@@ -99,4 +99,7 @@ public class Infirmiere {
                 ", nb_nouvellesDurees=" + (nouvellesDurees != null ? nouvellesDurees.size() : 0) +
                 '}';
     }
+    public Infirmiere creerInfirmiere(String nom, String prenom, String courriel) {
+       return new Infirmiere(nom, prenom, courriel);
+    }
 }
