@@ -3,10 +3,11 @@ package modele;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "RENDEZ_VOUS")
 public class RendezVous {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hospital_seq_gen")
@@ -17,10 +18,16 @@ public class RendezVous {
             allocationSize = 2
     )
     private Long id;
-    @NotNull
-    private Date date;
-    private @NotNull LocalTime heureDebut;
-    private @NotNull LocalTime heureFin;
+    @Column(name = "DATE_RDV")
+    @NotNull(message = "La date est obligatoire.")
+    private LocalDate date;
+
+    @NotNull(message = "L'heure du debut de rendez-vous est obligatoire.")
+    @Column(name = "HEURE_DEBUT")
+    private LocalDateTime heureDebut;
+    @Column(name = "HEURE_FIN")
+    @NotNull(message = "L'heure de la fin du rendez-vous est obligatoire.")
+    private  LocalDateTime heureFin;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "infirmiere_id")
@@ -33,40 +40,43 @@ public class RendezVous {
    @ManyToOne(fetch = FetchType.EAGER)
    @JoinColumn(name = "service_id")
     private Service service;
+   @ManyToOne(fetch = FetchType.EAGER)
+   @JoinColumn(name = "disponibilite_id")
+   private Disponibilite disponibilite;
 
-    public RendezVous(Date date, @NotNull LocalTime heureDebut, @NotNull LocalTime heureFin, Infirmiere infirmiere, Patient patient, Service service_id) {
+    public RendezVous(@NotNull(message = "La date est obligatoire.") LocalDate date, LocalDateTime heureDebut, LocalDateTime heureFin, Patient patient, Infirmiere infirmiere, Service service) {
         this.date = date;
         this.heureDebut = heureDebut;
         this.heureFin = heureFin;
-        this.infirmiere = infirmiere;
         this.patient = patient;
-        this.service = service_id;
+        this.infirmiere = infirmiere;
+        this.service = service;
     }
 
     public RendezVous() {
     }
 
-    public Date getDate() {
+    public @NotNull(message = "La date est obligatoire.") LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(@NotNull(message = "La date est obligatoire.") LocalDate date) {
         this.date = date;
     }
 
-    public @NotNull LocalTime getHeureDebut() {
+    public @NotNull(message = "L'heure du debut de rendez-vous est obligatoire.") LocalDateTime getHeureDebut() {
         return heureDebut;
     }
 
-    public void setHeureDebut(@NotNull LocalTime heureDebut) {
+    public void setHeureDebut(@NotNull(message = "L'heure du debut de rendez-vous est obligatoire.") LocalDateTime heureDebut) {
         this.heureDebut = heureDebut;
     }
 
-    public @NotNull LocalTime getHeureFin() {
+    public @NotNull(message = "L'heure de la fin du rendez-vous est obligatoire.") LocalDateTime getHeureFin() {
         return heureFin;
     }
 
-    public void setHeureFin(@NotNull LocalTime heureFin) {
+    public void setHeureFin(@NotNull(message = "L'heure de la fin du rendez-vous est obligatoire.") LocalDateTime heureFin) {
         this.heureFin = heureFin;
     }
 
@@ -92,6 +102,22 @@ public class RendezVous {
 
     public void setService_id(Service service_id) {
         this.service = service_id;
+    }
+
+    public Disponibilite getDisponibilite() {
+        return disponibilite;
+    }
+
+    public void setDisponibilite(Disponibilite disponibilite) {
+        this.disponibilite = disponibilite;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 
     @Override

@@ -1,9 +1,7 @@
 package modele;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
@@ -19,20 +17,21 @@ public class Patient {
             allocationSize = 2
     )
     private Long id;
-    @NotNull
-    @Length(min = 2)
+    @NotBlank(message = "Le nom est obligatoire")
+    @Size(min = 2, max = 100)
     private String nom;
+
     @NotNull
     @Length(min = 3)
     private String prenom;
 
-    @NotNull
-    @Email
+    @Email(message = "Le format du courriel est invalide")
+    @NotBlank(message = "Le courriel est obligatoire")
     @Column(unique = true)
     private String courriel;
 
-    @NotNull
-    @Length(min = 3)
+    @NotBlank
+    @Size(min = 8, message = "Le mot de passe doit avoir au moins 8 caractères")
     private String mot_de_passe;
 
     @OneToMany(mappedBy = "patient")

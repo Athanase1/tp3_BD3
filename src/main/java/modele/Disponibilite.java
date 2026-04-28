@@ -3,8 +3,8 @@ package modele;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.sql.Date;
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class Disponibilite {
@@ -17,20 +17,28 @@ public class Disponibilite {
             allocationSize = 2
     )
     private Long id;
-    @NotNull
-    private Date date;
-    private @NotNull LocalTime heure_debut;
-    private @NotNull LocalTime heure_fin;
+
+    @Column(name = "DATE_DISPO")
+    @NotNull(message = "La date est obligatoire")
+    private LocalDate date;
+
+    @Column(name = "HEURE_DEBUT")
+    @NotNull(message = "L'heure du debut de la disponibilité est obligatoire")
+    private LocalDateTime heure_debut;
+
+    @Column(name = "HEURE_FIN")
+    @NotNull(message = "L'heure de fin de la disponibilté est obligatoire")
+    private  LocalDateTime heure_fin;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Infirmiere infirmiere;
 
-    public Disponibilite(Date date, @NotNull LocalTime heure_debut, @NotNull LocalTime heure_fin, Infirmiere infirmiere) {
+    public Disponibilite(@NotNull(message = "La date est obligatoire") LocalDate date, LocalDateTime heure_debut, LocalDateTime heure_fin) {
         this.date = date;
         this.heure_debut = heure_debut;
         this.heure_fin = heure_fin;
-        this.infirmiere = infirmiere;
     }
+
     public Disponibilite() {}
 
     public Long getId() {
@@ -41,27 +49,27 @@ public class Disponibilite {
         this.id = id;
     }
 
-    public Date getDate() {
+    public @NotNull(message = "La date est obligatoire") LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(@NotNull(message = "La date est obligatoire") LocalDate date) {
         this.date = date;
     }
 
-    public @NotNull LocalTime getHeure_debut() {
+    public @NotNull(message = "L'heure du debut de la disponibilité est obligatoire") LocalDateTime getHeure_debut() {
         return heure_debut;
     }
 
-    public void setHeure_debut(@NotNull LocalTime heure_debut) {
+    public void setHeure_debut(@NotNull(message = "L'heure du debut de la disponibilité est obligatoire") LocalDateTime heure_debut) {
         this.heure_debut = heure_debut;
     }
 
-    public @NotNull LocalTime getHeure_fin() {
+    public @NotNull(message = "L'heure de fin de la disponibilté est obligatoire") LocalDateTime getHeure_fin() {
         return heure_fin;
     }
 
-    public void setHeure_fin(@NotNull LocalTime heure_fin) {
+    public void setHeure_fin(@NotNull(message = "L'heure de fin de la disponibilté est obligatoire") LocalDateTime heure_fin) {
         this.heure_fin = heure_fin;
     }
 

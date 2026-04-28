@@ -19,15 +19,16 @@ public class Service {
     )
     private Long id;
 
-    @NotNull
-    @Length(min = 3)
+    @NotBlank(message = "Le nom est obligatoire")
+    @Size(min = 2, max = 100, message = "Le nom n'est pas valide")
     private String nom;
 
     @NotNull
     private int duree;
-    @NotNull
-    @Positive
+    @NotNull(message = "Ce champs est obligatoire!")
+    @Positive(message = "Le montant n'est pas valide")
     private double prix;
+
 
     @OneToMany(mappedBy = "service")
     private List<NouvelleDuree> nouvellesDurees;

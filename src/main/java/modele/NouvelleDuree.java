@@ -18,7 +18,8 @@ public class NouvelleDuree {
     private Long id;
 
     @NotNull
-    @Min(5)
+    @Min(value = 5, message = "Nouvelle durée invalide!")
+    @Column(name = "DUREE_PERSONNALISEE")
     private int nouvelleDuree;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

@@ -2,9 +2,10 @@ package modele;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.Generated;
-import org.hibernate.validator.constraints.Length;
+import jakarta.validation.constraints.NotBlank;
+
+import jakarta.validation.constraints.Size;
+
 
 import java.util.List;
 
@@ -21,15 +22,15 @@ public class Infirmiere {
     )
     private Long id;
 
-    @NotNull
-    @Length(min = 3)
+    @NotBlank(message = "Le nom est obligatoire")
+    @Size(min = 2, max = 100, message = "Le nom n'est pas valide")
     private String nom;
-    @NotNull
-    @Length(min = 3)
+    @NotBlank(message = "Le nom est obligatoire")
+    @Size(min = 2, max = 100, message = "Le nom n'est pas valide")
     private String prenom;
 
-    @NotNull
-    @Email
+    @Email(message = "Le format du courriel est invalide")
+    @NotBlank(message = "Le courriel est obligatoire")
     @Column(unique = true)
     private String courriel;
 
